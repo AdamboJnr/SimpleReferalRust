@@ -1,10 +1,12 @@
 extern crate referals;
 
-use referals::Referal;
+use referals::{ Referal, CreatedUsers };
 fn main() {
-    let parent = Referal::new(String::from("Allan"));
+    let users = CreatedUsers::new();
 
-    let child = Referal::new(String::from("Levy"));
+    let parent = Referal::new(String::from("Allan"), &users);
+
+    let child = Referal::new(String::from("Levy"), &users);
 
     parent.add_child(child);
 
