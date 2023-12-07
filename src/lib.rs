@@ -4,6 +4,8 @@
 use std::cell::RefCell;
 use std::rc::{ Rc, Weak };
 use std::iter::Map;
+use std::io::stdin;
+use std::process;
 
 #[derive(Debug)]
 pub struct Referal {
@@ -54,6 +56,13 @@ impl CreatedUsers {
     pub fn add_user(&self, user: Rc<Referal>) {
         self.users.borrow_mut().push(user);
     }
+}
+
+pub fn read_input(inp: &mut String) -> usize {
+    stdin().read_line( inp).unwrap_or_else(| err | {
+        println!("Error: {}", err);
+        process::exit(1);
+    })
 }
 
 #[cfg(test)]

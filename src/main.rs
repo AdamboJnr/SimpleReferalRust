@@ -1,9 +1,22 @@
 extern crate referals;
 
 use referals::{ Referal, CreatedUsers };
-use std::rc::Rc;
+// use std::rc::Rc;
+
 fn main() {
     let users = CreatedUsers::new();
+
+    // Creating a new user - Taking user name
+    println!("Please enter your name: ");
+    let mut user = String::new();
+    referals::read_input(&mut user);
+
+    // Creating a new user - Taking referee name
+    println!("Enter name of Referee: ");
+    let mut user_referee = String::new();
+    referals::read_input(&mut user_referee);
+
+    println!("User: {}, Referee: {}", user, user_referee);
 
     let parent = Referal::new(String::from("Allan"), &users);
 
@@ -23,3 +36,4 @@ fn main() {
     // println!("{:?}", parent.check_balance());
     println!("{:?}", parent.check_children());
 }
+
