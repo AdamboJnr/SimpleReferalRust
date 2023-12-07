@@ -2,18 +2,20 @@
 #![allow(unused_imports)]
 
 use std::cell::RefCell;
-use std::rc::Rc;
+use std::rc::{ Rc, Weak };
+use std::iter::Map;
 
 #[derive(Debug)]
 pub struct Referal {
     name: String,
+    parent: RefCell<Weak<Referal>>,
     children: RefCell<Vec<Rc<Referal>>>,
     commission: RefCell<i64>,
 }
 
 impl Referal {
     pub fn new(name: String, users: &CreatedUsers) -> Rc<Referal> {
-       let new_referal = Rc::new(Referal { name , children: RefCell::new(vec![]), commission: RefCell::new(0) });
+       let new_referal = Rc::new(Referal { name , children: RefCell::new(vec![]), parent: RefCell::new(Weak::new() ), commission: RefCell::new(0) });
 
        users.add_user(Rc::clone(&new_referal));
 
@@ -30,6 +32,12 @@ impl Referal {
         }
 
         &self.commission
+    }
+
+    pub fn check_children(&self) -> Vec<String>{
+        self.children.borrow().iter().map(|child | {
+            child.name.to_string()
+        }).collect()
     }
 }
 
